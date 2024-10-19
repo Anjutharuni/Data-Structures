@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define size 100
+
+void Push(int x, int n, int *top, int stack[]) {
+    if (*top == n - 1) {
+        printf("Stack overflow!\n");
+        return;
+    }
+    (*top)++;
+    stack[*top] = x;
+}
+
+int Pop(int *top, int stack[]) {
+    if (*top == -1) {
+        printf("Stack underflow!\n");
+        return -1;
+    }
+    int temp = stack[*top];
+    (*top)--;
+    printf("The element popped is %d\n", temp);
+    return temp;
+}
+
+void Display(int *top, int stack[]) {
+    if (*top == -1) {
+        printf("Stack is empty\n");
+        return;
+    }
+    printf("Elements in Stack are:\n");
+    for (int i = *top; i >= 0; i--) {
+        printf("%d\n", stack[i]);
+    }
+}
+
+int main() {
+    int top = -1, stack[size], choice, n, element;
+    printf("Enter size of the stack:\n");
+    scanf("%d", &n);
+    printf("Stack Operations using array\n");
+    printf("1. Push\n2. Pop\n3. Display\n4. Exit\n");
+
+    while (1) {
+        printf("Enter your choice:\n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter the element to be pushed inside the Stack:\n");
+                scanf("%d", &element);
+                Push(element, n, &top, stack);
+                break;
+
+            case 2:
+                Pop(&top, stack);
+                break;
+
+            case 3:
+                Display(&top, stack);
+                break;
+
+            case 4:
+                exit(0);
+
+            default:
+                printf("Enter a valid choice!\n");
+                break;
+        }
+    }
+    return 0;
+}
