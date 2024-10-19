@@ -1,0 +1,57 @@
+#include<stdio.h>
+#include<string.h>
+void push(char x,int *top,char stack[]){
+    (*top)++;
+stack[*top]=x;
+}
+char pop(int *top,char stack[]){
+if(*top==-1)
+    return -1;
+else{
+    char temp=stack[*top];
+    (*top)--;
+    return temp;
+}
+
+}
+int priority(char x)
+{
+
+    if(x=='(')
+        return 0;
+    if(x=='+'||x=='-')
+        return 1;
+      if(x=='*'||x=='/')
+        return 2;
+}
+int main(){
+char exp[20];
+int top=-1;
+char stack[20];
+char c,x;
+printf("enter the expression:");
+scanf("%s",exp);
+int i;
+for(i=0;i<strlen(exp);i++){
+    c=exp[i];
+    if((c>='a'&&c<='z')||(c>='A'&&c<='z')||(c>='0'&&c<='9'))
+        printf("%c",c);
+    else if(c=='(')
+                push(c,&top,stack);
+    else if(c==')'){
+            while((x=pop(&top,stack))!='(')
+        printf("%c",x);
+    }
+    else{
+        while(top!=-1&&priority(stack[top])>=priority(c))
+            printf("%c",pop(&top,stack));
+        push(c,&top,stack);
+    }
+}
+
+
+while(top!=-1){
+    printf("%c",pop(&top,stack));
+}
+return 0;
+}
