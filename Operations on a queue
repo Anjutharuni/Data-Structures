@@ -1,0 +1,74 @@
+#include<stdio.h>
+#include<stdlib.h>
+void Insert(int queue[], int *front, int *rear, int n, int val);
+void Delete(int queue[], int *front, int *rear, int n);
+void display(int queue[], int front, int rear);
+int main()
+{
+    int n,front=-1,rear=-1,val,choice;
+    printf("Enter the size of queue:");
+    scanf("%d",&n);
+    int queue[n];
+    while(1){
+    printf("\nEnter you choice\n1.insert\n2.delete\n3.dispaly\n4.exit\n");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+        case 1:
+            printf("Enter the value to be inserted:");
+            scanf("%d",&val);
+            Insert(queue,&front,&rear,n,val);
+            break;
+        case 2:
+            Delete(queue,&front,&rear,n);
+            break;
+        case 3:
+            display(queue,front,rear);
+            break;
+        case 4:
+            exit(0);
+        default:
+            printf("Enter valid input");
+    }
+    }
+
+}
+void Insert(int queue[],int *front,int *rear,int n,int val)
+{
+    if(*rear==n-1)
+        printf("Queue is full\n");
+    else if(*rear==-1&& *front==-1){
+        *rear=*front=0;
+        queue[*rear]=val;
+
+    }
+    else{
+        (*rear)++;
+        queue[*rear]=val;
+    }
+
+}
+void Delete(int queue[],int *front,int *rear,int n)
+{
+    if(*front==-1 || *front>*rear)
+    {
+        printf("queue is empty\n");
+    }
+    else
+    {
+        int b;
+        b=queue[*front];
+        (*front)++;
+        printf("the deleted value is %d\n",b);
+
+    }
+}
+void display(int queue[],int front,int rear)
+{
+    int i;
+    printf("the elements in queue are\n");
+    for(i=front;i<=rear;i++)
+    {
+        printf("%d  ",queue[i]);
+    }
+}
