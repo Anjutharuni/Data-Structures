@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *prev;
+    struct node*next;
+};
+void insertBefore(int val,int data,struct node **head)
+{
+    struct node*newnode=malloc(sizeof(struct node));
+    newnode->data=data;
+    if(*head==NULL)
+    {
+        newnode->prev=NULL;
+        newnode->next=NULL;
+        *head=newnode;
+        return;
+    }
+    struct node*temp=*head;
+    while(temp!=NULL)
+    {
+        if(temp->data==val)
+        {
+            newnode->next=temp;
+
+            if(temp->prev==NULL)
+            {
+                newnode->prev=NULL;
+                temp->prev=newnode;
+                *head=newnode;
+                return;
+            }
+            newnode->prev=temp->prev;
+            temp->prev->next=newnode;
+            temp->prev=newnode;
+            return;
+        }
+        temp=temp->next;
+    }
+}
+void deleteValue(struct node**head,int val)
+{
+    struct node *temp=*head;
+    while(temp!=NULL)
+    {
+        if(temp->data==val)
+        {
+            if(temp->prev==NULL)
+            {
+                temp->next->prev=NULL;
+                *head =(*head)->next;
+                free(temp);
+                return;
+            }
+            if(temp->next==NULL)
+            {
+                temp->prev->next=NULL;
+                free(temp);
+                return;
+            }
+            if(temp->prev!=NULL && temp->next!=NULL)
+            {
+                temp->prev->next=temp->next;
+                temp->next->prev=temp->prev;
+                free(temp);
+                return;
+            }
+        }
+        temp=temp->next;
+    }
+}
+void display(struct node*head)
+{
+    while(head!=NULL)
+    {
+        printf("%d->",head->data);
+        head=head->next;
+    }
+    printf("NULL\n");
+}
+
+int main()
+{
+    struct node*head=NULL;
+    insertBefore(0,2,&head);
+    insertBefore(2,3,&head);
+    insertBefore(2,5,&head);
+    insertBefore(3,6,&head);
+    insertBefore(5,9,&head);
+    display(head);
+
+    deleteValue(&head,9);
+    deleteValue(&head,2);
+    display(head);
+
+}
