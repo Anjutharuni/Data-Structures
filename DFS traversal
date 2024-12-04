@@ -1,0 +1,50 @@
+#include<stdio.h>
+#define max 5
+int DFS(int adj[][max],int visited[],int start)
+{
+    int stack[max];
+    int top=-1,i,j;
+    for(i=0;i<max;i++)
+        visited[i]=0;
+    stack[++top]=start;
+    visited[start]=1;
+    while(top!=-1)
+    {
+        start=stack[top--];
+        printf("%c->",(start+65));
+        for(i=0;i<max;i++)
+        {
+            if(adj[start][i] && visited[i]==0)
+            {
+                stack[++top]=i;
+                visited[i]=1;
+            }
+        }
+    }
+
+    for(i=0;i<max;i++)
+        {
+            if(visited[i]==0)
+                return 0;
+        }
+        return 1;
+}
+int main()
+{
+    int adj[max][max],visited[max],i,j,k;
+    printf("Enter the adjacency matrix\n");
+    for(i=0;i<max;i++)
+    {
+        for(j=0;j<max;j++)
+        {
+            scanf("%d",&adj[i][j]);
+        }
+        printf("\n");
+    }
+    k=DFS(adj,visited,0);
+    if(k==0)
+        printf("Graph is not connected\n");
+    else
+        printf("\nGraph is connected\n");
+
+}
